@@ -128,6 +128,8 @@
             get: (searchParams, prop) => searchParams.get(prop),
           });
           if (params.sql) {
+            const queryInput = document.getElementById("library-input");
+            queryInput.innerText = params.sql; 
             fetchBooks(params.sql, printBooks);
           }
            
