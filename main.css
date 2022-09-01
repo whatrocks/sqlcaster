@@ -55,13 +55,14 @@
 }
 
 #library-button {
-    background-color: rgb(33, 93, 211);
+    /* background-color: rgb(33, 93, 211); */
+    background-color: fuchsia;
     color: white;
     margin: 10px;
 }
 
 #library-lazy {
-    background-color: #20c997;
+    background-color: grey;
     color: white;
 }
 
