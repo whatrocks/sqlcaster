@@ -22,7 +22,7 @@
               id="library-input"
               class="librarySelect"
             >
-            SELECT username, contents, searchcaster_url, reactions, recasts, watches FROM casts WHERE to_timestamp(published_at*1000000) < NOW() AND username <> 'dwr' ORDER BY reactions DESC LIMIT 10
+            SELECT username, avatar_url, contents, searchcaster_url, reactions, recasts, watches FROM casts WHERE to_timestamp(published_at*1000000) < NOW() AND username <> 'dwr' ORDER BY reactions DESC LIMIT 10
             </p>
             <div id="library-button-row">
               <div class="btn" id="library-button">Submit SQL Query</div>
@@ -68,12 +68,12 @@
           bookElement.classList = ["card"];
           Object.keys(book).forEach(key=> {
             switch(key) {
-              case 'cover_url':
+              case 'avatar_url':
+                console.log(book);
                 const cover = document.createElement("img");
-                cover.alt = `${book.title}`
-                cover.src = `${book.cover_url}`;
-                cover.height = "250"
-                cover.width = "165";
+                cover.classList = ["avatar"];
+                cover.alt = `${book.username}`
+                cover.src = `${book.avatar_url}`;
                 bookElement.appendChild(cover);
                 break;
               case 'searchcaster_url':
@@ -118,7 +118,7 @@
         const library = document.getElementById("the-library");
         const QUERIES = [
           "select * from casts where username = 'whatrocks' order by reactions desc limit 3;",
-          "SELECT username, contents, searchcaster_url, reactions, recasts, watches FROM casts WHERE to_timestamp(published_at*1000000) < NOW() AND username <> 'dwr' ORDER BY reactions DESC LIMIT 10",
+          "SELECT username, avatar, contents, searchcaster_url, reactions, recasts, watches FROM casts WHERE to_timestamp(published_at*1000000) < NOW() AND username <> 'dwr' ORDER BY reactions DESC LIMIT 10",
           "SELECT DATE_TRUNC('month',to_timestamp(published_at*1000000)) AS month, COUNT(*) AS count FROM casts group by DATE_TRUNC('month',to_timestamp(published_at*1000000))",
           "SELECT DATE_TRUNC('month',to_timestamp(published_at*1000000)) AS month, COUNT(*) AS count FROM casts WHERE username = 'whatrocks' group by DATE_TRUNC('month',to_timestamp(published_at*1000000)) order by count desc"
         ]
