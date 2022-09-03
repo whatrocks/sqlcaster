@@ -108,3 +108,9 @@
     border-radius: 25px;
     width: 50px;
 }
+
+#download {
+    border: 1px solid plum;
+    border-radius: 4px;
+    margin-left: 10px;
+}

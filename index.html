@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Search Farcaster with SQL using ROAPI"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Search Farcaster with SQL using ROAPI" />
     <link rel="stylesheet" type="text/css" href="./main.css" />
     <title>SQLcaster</title>
   </head>
@@ -11,26 +11,25 @@
       <h1>SQLcaster</h1>
     </header>
     <div id="contents">
-        <div id="the-library">
-          <div id="library-instructions">
-            <h3 id="library-title">Search Farcaster with SQL:</h3>
-            <span id="library-schema">&nbsp;&nbsp;Show schema</span>
-          </div>
-          <div id="library-form">
-            <p
-              contentEditable
-              id="library-input"
-              class="librarySelect"
-            >
-            SELECT username, avatar_url, contents, searchcaster_url, reactions, recasts, watches FROM casts WHERE to_timestamp(published_at*1000000) < NOW() AND username <> 'dwr' ORDER BY reactions DESC LIMIT 10
-            </p>
-            <div id="library-button-row">
-              <div class="btn" id="library-button">Submit SQL Query</div>
-              <div class="btn" id="library-lazy">I'm Feeling Super Lazy</div>
-            </div>            
-          </div>
-          <div id="booklist"></div>
+      <div id="the-library">
+        <div id="library-instructions">
+          <h3 id="library-title">Search Farcaster with SQL:</h3>
+          <span id="library-schema">&nbsp;&nbsp;Show schema</span>
         </div>
+        <div id="library-form">
+          <p contenteditable id="library-input" class="librarySelect">
+            SELECT username, avatar_url, contents, searchcaster_url, reactions,
+            recasts, watches FROM casts WHERE to_timestamp(published_at*1000000)
+            < NOW() AND username <> 'dwr' ORDER BY reactions DESC LIMIT 10
+          </p>
+          <div id="library-button-row">
+            <div class="btn" id="library-button">Submit SQL Query</div>
+            <div class="btn" id="library-lazy">I'm Feeling Super Lazy</div>
+            <div class="btn" id="download">Download Results as CSV</div>
+          </div>
+        </div>
+        <div id="booklist"></div>
+      </div>
     </div>
     <footer>
       <hr />
@@ -38,8 +37,12 @@
     </footer>
     <script>
       // SQLcaster
+
+      let CURRENT_RESULTS = [];
+
       document.addEventListener("DOMContentLoaded", function() {
         const BASE_URL = 'https://sqlcaster.whatrocks.repl.co/api/';
+
         function printBooks(books) {
           const booklist = document.getElementById("booklist");
           booklist.innerHTML = ''
@@ -50,9 +53,10 @@
           } else {
             for (let field of books.casts.fields) {
               printSchema(field)
-            }             
+            }
           }
         }
+
         function printSchema(field) {
           const booklist = document.getElementById("booklist");
           const bookElement = document.createElement("div");
@@ -62,6 +66,7 @@
           bookElement.appendChild(p);
           booklist.appendChild(bookElement);
         }
+
         function prettyPrintBook(book) {
           const booklist = document.getElementById("booklist");
           const bookElement = document.createElement("div");
@@ -69,7 +74,7 @@
           Object.keys(book).forEach(key=> {
             switch(key) {
               case 'avatar_url':
-                console.log(book);
+                // console.log(book);
                 const cover = document.createElement("img");
                 cover.classList = ["avatar"];
                 cover.alt = `${book.username}`
@@ -92,11 +97,12 @@
                 } else {
                   p.innerText = `${key}: ${book[key]}`;
                 }
-                bookElement.appendChild(p);              
-            }            
+                bookElement.appendChild(p);
+            }
           });
           booklist.appendChild(bookElement);
         }
+
         function fetchBooks(query, cb, query_type = 'sql') {
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
@@ -104,6 +110,8 @@
                 const status = xmlhttp.status;
                 if (status === 0 || (status >= 200 && status < 400)) {
                     const results = JSON.parse(xmlhttp.responseText)
+                    CURRENT_RESULTS = results;
+                    // console.log("current res:", typeof CURRENT_RESULTS);
                     cb(results)
                 } else {
                     const booklist = document.getElementById("booklist");
@@ -113,7 +121,7 @@
             }
             const http_verb = query_type === "sql" ? 'POST' : 'GET';
               xmlhttp.open(http_verb, `${BASE_URL}${query_type}`, true);
-              xmlhttp.send(query); 
+              xmlhttp.send(query);
         }
         const library = document.getElementById("the-library");
         const QUERIES = [
@@ -129,13 +137,13 @@
           });
           if (params.sql) {
             const queryInput = document.getElementById("library-input");
-            queryInput.innerText = params.sql; 
+            queryInput.innerText = params.sql;
             fetchBooks(params.sql, printBooks);
           }
-           
-          // to set new query 
+
+          // to set new query
           const newParams = new URLSearchParams();
-          
+
           const libraryButton = document.getElementById("library-button");
           libraryButton.addEventListener('click', e => {
             e.preventDefault();
@@ -157,12 +165,21 @@
             fetchBooks(query, printBooks);
           });
           const schemaButton = document.getElementById("library-schema");
-          schemaButton.addEventListener('click', e => { 
+          schemaButton.addEventListener('click', e => {
             fetchBooks('', printBooks, 'schema');
+          });
+          const downloadButton = document.getElementById("download");
+          
+          downloadButton.addEventListener('click', e => {
+            let csvContent = "data:text/csv;charset=utf-8,\n" + Object.keys(CURRENT_RESULTS[0]).join(';') + '\n';
+            for (let row of CURRENT_RESULTS) {
+              csvContent += Object.values(row).join(';') + '\n';
+            }
+            const encodedUri = encodeURI(csvContent);
+            window.open(encodedUri);
           });
         }
       });
     </script>
   </body>
 </html>
-
