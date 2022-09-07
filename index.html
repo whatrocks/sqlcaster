@@ -37,9 +37,7 @@
     </footer>
     <script>
       // SQLcaster
-
       let CURRENT_RESULTS = [];
-
       document.addEventListener("DOMContentLoaded", function() {
         const BASE_URL = 'https://sqlcaster.whatrocks.repl.co/api/';
 
@@ -74,7 +72,6 @@
           Object.keys(book).forEach(key=> {
             switch(key) {
               case 'avatar_url':
-                // console.log(book);
                 const cover = document.createElement("img");
                 cover.classList = ["avatar"];
                 cover.alt = `${book.username}`
@@ -111,7 +108,6 @@
                 if (status === 0 || (status >= 200 && status < 400)) {
                     const results = JSON.parse(xmlhttp.responseText)
                     CURRENT_RESULTS = results;
-                    // console.log("current res:", typeof CURRENT_RESULTS);
                     cb(results)
                 } else {
                     const booklist = document.getElementById("booklist");
