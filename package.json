@@ -1,0 +1,11 @@
+{
+  "name": "sqlcaster",
+  "version": "1.0.0",
+  "description": "Explore Farcaster data with SQL interface via ROAPI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whatrocks/sqlcaster.git"
+  },
+  "author": "Charlie Harrington",
+  "homepage": "https://sqlcaster.xyz/"
+}
