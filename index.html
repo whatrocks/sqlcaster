@@ -23,7 +23,7 @@
           </p>
           <div id="library-button-row">
             <div class="btn" id="library-button">Submit SQL Query</div>
-            <div class="btn" id="library-lazy">I'm Feeling Super Lazy</div>
+            <div class="btn" id="library-lazy">I'm Feeling Lazy</div>
             <div class="btn" id="download">Download Results as CSV</div>
           </div>
         </div>
@@ -193,10 +193,10 @@
           downloadButton.addEventListener("click", (e) => {
             let csvContent =
               "data:text/csv;charset=utf-8,\n" +
-              Object.keys(CURRENT_RESULTS[0]).join(";") +
+              Object.keys(CURRENT_RESULTS[0]).join(",") +
               "\n";
             for (let row of CURRENT_RESULTS) {
-              csvContent += Object.values(row).join(";") + "\n";
+              csvContent += Object.values(row).join(",") + "\n";
             }
             const encodedUri = encodeURI(csvContent);
             window.open(encodedUri);
