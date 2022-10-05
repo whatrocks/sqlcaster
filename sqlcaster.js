@@ -127,16 +127,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     const downloadButton = document.getElementById("download");
 
-    downloadButton.addEventListener("click", (e) => {
-      let csvContent =
-        "data:text/csv;charset=utf-8,\n" +
-        Object.keys(CURRENT_RESULTS[0]).join(",") +
-        "\n";
-      for (let row of CURRENT_RESULTS) {
-        csvContent += Object.values(row).join(",") + "\n";
-      }
-      const encodedUri = encodeURI(csvContent);
-      window.open(encodedUri);
+    downloadButton.addEventListener("click", (evt) => {
+      window.open(
+        encodeURI(
+          `data:text/csv;charset=utf-8,\n${new TreeNode(
+            CURRENT_RESULTS
+          ).toCsv()}`
+        )
+      );
     });
   }
 });
