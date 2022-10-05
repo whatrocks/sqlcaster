@@ -1,3 +1,7 @@
+* {
+    font-family: monospace;
+}
+
 /* library */
 #the-library {
     width: 100%;
@@ -105,8 +109,8 @@
 }
 
 .avatar {
-    border-radius: 25px;
-    width: 50px;
+    border-radius: 50px;
+    width: 100px;
 }
 
 #download {
