@@ -128,7 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const downloadButton = document.getElementById("download");
 
     downloadButton.addEventListener("click", (evt) => {
-      console.log(CURRENT_RESULTS);
       window.open(
         encodeURI(
           `data:text/csv;charset=utf-8,\n${new TreeNode(
