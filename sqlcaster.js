@@ -9,6 +9,7 @@ function printResults(books) {
       prettyPrint(book);
     }
   } else {
+    // BUG: this is hardcoded to `casts` table name
     for (let field of books.casts.fields) {
       printSchema(field);
     }
@@ -88,6 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
     "SELECT DATE_TRUNC('month',to_timestamp(published_at*1000000)) AS month, COUNT(*) AS count FROM casts group by DATE_TRUNC('month',to_timestamp(published_at*1000000)) ORDER BY 2 DESC",
   ];
   if (library) {
+    // fetch any existing queries
+    const savedQueries = window.localStorage.getItem("queries")
+      ? JSON.parse(window.localStorage.getItem("queries"))
+      : [];
+
     // get existing query
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
@@ -97,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
       queryInput.innerText = params.sql;
       fetchBooks(params.sql, printResults);
     }
-
     // to set new query
     const newParams = new URLSearchParams();
     const libraryButton = document.getElementById("library-button");
@@ -106,6 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const queryInput = document.getElementById("library-input");
       const query = queryInput.innerText.trim();
       newParams.set("sql", query);
+      savedQueries.unshift(query);
+      window.localStorage.setItem("queries", JSON.stringify(savedQueries));
       window.history.replaceState({}, "", `${location.pathname}?${newParams}`);
       fetchBooks(query, printResults);
     });
@@ -133,6 +140,21 @@ document.addEventListener("DOMContentLoaded", function () {
           ).toCsv()}`
         )
       );
+    });
+    const historyButton = document.getElementById("btn-history");
+    historyButton.addEventListener("click", (evt) => {
+      const history = document.getElementById("history");
+      history.innerHTML = "";
+      const savedQueries = window.localStorage.getItem("queries")
+        ? JSON.parse(window.localStorage.getItem("queries"))
+        : [];
+      for (let q of savedQueries) {
+        const query = document.createElement("div");
+        const p = document.createElement("p");
+        p.innerText = q;
+        query.appendChild(p);
+        history.appendChild(query);
+      }
     });
   }
 });

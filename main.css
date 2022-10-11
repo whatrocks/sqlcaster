@@ -59,8 +59,14 @@
   margin-bottom: 10px;
 }
 
+#library-schema {
+  margin-left: 10px;
+  padding: 5px;
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+}
+
 #library-button {
-  /* background-color: rgb(33, 93, 211); */
   background-color: fuchsia;
   color: white;
   margin: 10px;
@@ -117,6 +123,12 @@
 
 #download {
   border: 1px solid plum;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+#btn-history {
+  border: 1px solid tomato;
   border-radius: 4px;
   margin-left: 10px;
 }
