@@ -96,8 +96,8 @@
 
 .btn {
   display: inline-block;
-  width: 25%;
-  height: 20px;
+  /* width: 20%; */
+  /* height: 40px; */
   text-align: center;
   font-weight: 400;
   line-height: 1.5;
