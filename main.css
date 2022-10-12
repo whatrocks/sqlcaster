@@ -96,7 +96,9 @@
 
 .btn {
   display: inline-block;
-  width: 49%;
+  width: 25%;
+  height: 20px;
+  text-align: center;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
