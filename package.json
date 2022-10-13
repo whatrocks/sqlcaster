@@ -9,6 +9,7 @@
     "url": "git+https://github.com/whatrocks/sqlcaster.git"
   },
   "dependencies": {
+    "eslint-config-prettier": "^8.5.0",
     "next": "12.2.3",
     "react": "^18",
     "react-dom": "^18",
