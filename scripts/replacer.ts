@@ -13,4 +13,3 @@ const options = {
     console.error("Error occurred:", error);
   }
 })();
-export {};
