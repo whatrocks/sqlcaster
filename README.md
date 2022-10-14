@@ -1,17 +1,21 @@
 # sqlcaster
 
-Explore Farcaster data with SQL interface via ROAPI
+Explore Farcaster data with SQL interface via ROAPI.
 
 Try now: https://sqlcaster.xyz/
 
-## Developing locally
+## Getting Started
 
-This repo uses [Bun](https://bun.sh/), cause, why not? Seems fun.
+### Run the development server:
 
-Install deps
-
-```
-bun install
+```bash
+bun dev
 ```
 
-This repo is a pure client side web app so you can either just open `index.html` in your browser or if you prefer serve this folder locally using something like `python3 -m http.server`.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+
+### Build static site:
+
+```bash
+bun run export
+```
