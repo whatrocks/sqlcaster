@@ -2,3 +2,26 @@
   border-radius: 50px;
   width: 100px;
 }
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.item {
+  text-align: center;
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem;
+  padding: 1rem;
+  max-width: 400px;
+  overflow: hidden;
+}

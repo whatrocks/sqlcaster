@@ -16,16 +16,6 @@ function printResults(books) {
   }
 }
 
-function printSchema(field) {
-  const booklist = document.getElementById("booklist");
-  const bookElement = document.createElement("div");
-  bookElement.classList = ["card"];
-  const p = document.createElement("p");
-  p.innerText = `${field.name}: ${field.data_type}`;
-  bookElement.appendChild(p);
-  booklist.appendChild(bookElement);
-}
-
 function prettyPrint(book) {
   const booklist = document.getElementById("booklist");
   const bookElement = document.createElement("div");
@@ -83,11 +73,7 @@ function fetchBooks(query, cb, query_type = "sql") {
 
 document.addEventListener("DOMContentLoaded", function () {
   const library = document.getElementById("the-library");
-  const QUERIES = [
-    "select * from casts where username = 'whatrocks' and reactions is not null order by reactions desc limit 3;",
-    "SELECT username, count(*) from casts where deleted is not null group by 1 order by 2 desc limit 10;",
-    "SELECT DATE_TRUNC('month',to_timestamp(published_at*1000000)) AS month, COUNT(*) AS count FROM casts group by DATE_TRUNC('month',to_timestamp(published_at*1000000)) ORDER BY 2 DESC",
-  ];
+
   if (library) {
     // fetch any existing queries
     const savedQueries = window.localStorage.getItem("queries")
@@ -120,17 +106,14 @@ document.addEventListener("DOMContentLoaded", function () {
     lazyButton.addEventListener("click", (e) => {
       e.preventDefault();
       const queryInput = document.getElementById("library-input");
-      const randomIdx = Math.floor(Math.random() * QUERIES.length);
+
       queryInput.innerText = QUERIES[randomIdx];
       const query = queryInput.innerText.trim();
       newParams.set("sql", query);
       window.history.replaceState({}, "", `${location.pathname}?${newParams}`);
       fetchBooks(query, printResults);
     });
-    const schemaButton = document.getElementById("library-schema");
-    schemaButton.addEventListener("click", (e) => {
-      fetchBooks("", printResults, "schema");
-    });
+
     const downloadButton = document.getElementById("download");
     downloadButton.addEventListener("click", (evt) => {
       window.open(

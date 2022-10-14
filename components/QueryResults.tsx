@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 
-import styles from "../styles/QueryResults.module.css";
+import queryResultsStyles from "../styles/QueryResults.module.css";
+import homeStyles from "../styles/Home.module.css";
 
 const BASE_URL = "https://sqlcaster.whatrocks.repl.co/api/sql";
 
 export default function QueryResults(props) {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  const [err, setErr] = useState(null);
 
   useEffect(() => {
     setLoading(true);
+    setErr(null);
     fetch(`${BASE_URL}`, {
       method: "POST",
       headers: {
@@ -17,21 +20,41 @@ export default function QueryResults(props) {
       },
       body: props.query,
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          return res.text().then((text) => {
+            throw new Error(text);
+          });
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
         setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setErr(err.message);
         setLoading(false);
       });
   }, []);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>that didn't work</p>;
-
-  return (
-    <div className={styles.avatar}>
-      {data.map((d, i) => {
-        return <div key={i}>{d.username}</div>;
-      })}
-    </div>
-  );
+  if (err) return <p>{err}</p>;
+  if (!data) return <p>That did not work</p>;
+  if (data) {
+    return (
+      <div className={queryResultsStyles.results}>
+        {data.map((d, i) => {
+          return (
+            <div key={i} className={queryResultsStyles.item}>
+              {Object.keys(d).map((key, j) => {
+                return <p key={j}>{d[key]}</p>;
+              })}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 }
