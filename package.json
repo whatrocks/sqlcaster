@@ -31,8 +31,8 @@
   "module": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "export": "next build && next export && bun run replaceFilePaths",
-    "replaceFilePaths": "bun scripts/replacer.ts"
+    "export": "next build && next export && npm run replaceFilePaths",
+    "replaceFilePaths": "node scripts/replacer.ts"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
