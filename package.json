@@ -31,7 +31,7 @@
   "module": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "export": "next build && next export -o docs && bun run replaceFilePaths",
+    "export": "next build && next export && bun run replaceFilePaths",
     "replaceFilePaths": "bun scripts/replacer.ts"
   },
   "lint-staged": {
