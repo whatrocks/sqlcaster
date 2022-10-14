@@ -6,7 +6,7 @@ Try now: https://sqlcaster.xyz/
 
 ## Getting Started
 
-### Run the development server
+### Run the dev server
 
 ```bash
 bun dev
