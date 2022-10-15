@@ -8,7 +8,7 @@ import styles from "../styles/Home.module.css";
 
 const CANNED_QUERIES = [
   "select * from casts where username = 'whatrocks' and reactions is not null order by reactions desc limit 3;",
-  "SELECT username, count(*) from casts where deleted is not null group by 1 order by 2 desc limit 10;",
+  "SELECT avatar_url, count(*) as deleted_casts from casts where deleted is not null group by 1 order by deleted_casts desc limit 100;",
   "SELECT DATE_TRUNC('month',to_timestamp(published_at*1000000)) AS month, COUNT(*) AS count FROM casts group by DATE_TRUNC('month',to_timestamp(published_at*1000000)) ORDER BY 2 DESC",
 ];
 
