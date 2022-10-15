@@ -5,6 +5,14 @@ import homeStyles from "../styles/Home.module.css";
 
 const BASE_URL = "https://sqlcaster.whatrocks.repl.co/api/sql";
 
+function renderAvatarUrl(url) {
+  return (
+    <a href={url} target="_blank" rel="noreferrer">
+      <img className={queryResultsStyles.avatar} src={url} />
+    </a>
+  );
+}
+
 export default function QueryResults(props) {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
@@ -49,7 +57,20 @@ export default function QueryResults(props) {
           return (
             <div key={i} className={queryResultsStyles.item}>
               {Object.keys(d).map((key, j) => {
-                return <p key={j}>{d[key]}</p>;
+                return (
+                  <div key={j}>
+                    <div className={queryResultsStyles.fieldName}>
+                      {key.toUpperCase()}
+                    </div>
+                    {key === "avatar_url" ? (
+                      renderAvatarUrl(d[key])
+                    ) : (
+                      <div className={queryResultsStyles.fieldValue}>
+                        {d[key]}
+                      </div>
+                    )}
+                  </div>
+                );
               })}
             </div>
           );

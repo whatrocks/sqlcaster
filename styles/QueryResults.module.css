@@ -1,6 +1,7 @@
 .avatar {
   border-radius: 50px;
   width: 100px;
+  margin-top: 0.75em;
 }
 
 .results {
@@ -24,4 +25,13 @@
   padding: 1rem;
   max-width: 400px;
   overflow: hidden;
+}
+
+.fieldName {
+  font-size: 0.75em;
+  font-weight: 800;
+}
+
+.fieldValue {
+  margin-bottom: 0.75em;
 }
