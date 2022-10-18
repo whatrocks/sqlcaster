@@ -66,6 +66,12 @@ export default function Home({}) {
           <div>{showSchema && <Schema />}</div>
           <div>
             <Editor initialQuery={sqlQuery} onChange={handleQueryChange} />
+            <input
+              className={styles.queryInput}
+              contentEditable
+              value={sqlQuery}
+              onChange={(e) => setSqlQuery(e.target.value)}
+            />
             <div>
               <button onClick={handleQueryClick}>Submit Query</button>
               <button onClick={handleFeelingLazyClick}>
