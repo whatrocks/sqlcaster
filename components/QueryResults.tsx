@@ -52,29 +52,32 @@ export default function QueryResults(props) {
   if (!data) return <p>That did not work</p>;
   if (data) {
     return (
-      <div className={queryResultsStyles.results}>
-        {data.map((d, i) => {
-          return (
-            <div key={i} className={queryResultsStyles.item}>
-              {Object.keys(d).map((key, j) => {
-                return (
-                  <div key={j}>
-                    <div className={queryResultsStyles.fieldName}>
-                      {key.toUpperCase()}
-                    </div>
-                    {key === "avatar_url" ? (
-                      renderAvatarUrl(d[key])
-                    ) : (
-                      <div className={queryResultsStyles.fieldValue}>
-                        {d[key]}
+      <div>
+        <p>hi</p>
+        <div className={queryResultsStyles.results}>
+          {data.map((d, i) => {
+            return (
+              <div key={i} className={queryResultsStyles.item}>
+                {Object.keys(d).map((key, j) => {
+                  return (
+                    <div key={j}>
+                      <div className={queryResultsStyles.fieldName}>
+                        {key.toUpperCase()}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+                      {key === "avatar_url" ? (
+                        renderAvatarUrl(d[key])
+                      ) : (
+                        <div className={queryResultsStyles.fieldValue}>
+                          {d[key]}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
