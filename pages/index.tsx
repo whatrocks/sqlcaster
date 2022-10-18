@@ -1,6 +1,7 @@
 import Head from "next/head";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
+import Editor from "components/Editor";
 import Schema from "components/Schema";
 import QueryResults from "components/QueryResults";
 
@@ -19,6 +20,9 @@ export default function Home({}) {
   const [sqlQuery, setSqlQuery] = useState(
     "select * from casts where username = 'whatrocks' limit 4"
   );
+  const handleQueryChange = useCallback((newSqlQuery: string) => {
+    setSqlQuery(newSqlQuery);
+  }, []);
 
   const [showQueryResults, setShowQueryResults] = useState(false);
   const handleQueryClick = () => {
@@ -61,12 +65,7 @@ export default function Home({}) {
           </button>
           <div>{showSchema && <Schema />}</div>
           <div>
-            <input
-              className={styles.queryInput}
-              contentEditable
-              value={sqlQuery}
-              onChange={(e) => setSqlQuery(e.target.value)}
-            />
+            <Editor initialQuery={sqlQuery} onChange={handleQueryChange} />
             <div>
               <button onClick={handleQueryClick}>Submit Query</button>
               <button onClick={handleFeelingLazyClick}>

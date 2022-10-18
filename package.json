@@ -9,6 +9,10 @@
     "url": "git+https://github.com/whatrocks/sqlcaster.git"
   },
   "dependencies": {
+    "@codemirror/lang-sql": "^6.3.1",
+    "@codemirror/state": "^6.1.2",
+    "@codemirror/view": "^6.3.1",
+    "codemirror": "^6.0.1",
     "next": "12.2.3",
     "react": "^18",
     "react-dom": "^18",

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import queryResultsStyles from "../styles/QueryResults.module.css";
-import homeStyles from "../styles/Home.module.css";
 
 const BASE_URL = "https://sqlcaster.whatrocks.repl.co/api/sql";
 
@@ -53,7 +52,6 @@ export default function QueryResults(props) {
   if (data) {
     return (
       <div>
-        <p>hi</p>
         <div className={queryResultsStyles.results}>
           {data.map((d, i) => {
             return (
