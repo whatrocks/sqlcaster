@@ -44,7 +44,7 @@ export default function Home({}) {
       get: (searchParams, prop: string) => searchParams.get(prop),
     });
     if (params.sql) {
-      setSqlQuery(params.sql);
+      setReplaceQuery(params.sql);
       setShowQueryResults(true);
     }
   }, []);
@@ -83,7 +83,9 @@ export default function Home({}) {
               <s>Query History</s>
             </div>
           </div>
-          <div>{showQueryResults && <QueryResults query={sqlQuery} />}</div>
+          <div>
+            {sqlQuery && showQueryResults && <QueryResults query={sqlQuery} />}
+          </div>
           <div id="history"></div>
         </div>
       </main>
