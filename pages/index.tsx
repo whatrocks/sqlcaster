@@ -17,11 +17,14 @@ export default function Home({}) {
   const [showSchema, setShowSchema] = useState(false);
   const handleSchemaClick = () => setShowSchema(!showSchema);
 
-  const [sqlQuery, setSqlQuery] = useState(
-    "select * from casts where username = 'whatrocks' limit 4"
-  );
+  const [sqlQuery, setSqlQuery] = useState("");
   const handleQueryChange = useCallback((newSqlQuery: string) => {
     setSqlQuery(newSqlQuery);
+  }, []);
+
+  const [replaceQuery, setReplaceQuery] = useState("");
+  const handleReplaceQueryChange = useCallback(() => {
+    setReplaceQuery("");
   }, []);
 
   const [showQueryResults, setShowQueryResults] = useState(false);
@@ -34,7 +37,7 @@ export default function Home({}) {
 
   const handleFeelingLazyClick = () => {
     const randomIdx = Math.floor(Math.random() * CANNED_QUERIES.length);
-    setSqlQuery(CANNED_QUERIES[randomIdx]);
+    setReplaceQuery(CANNED_QUERIES[randomIdx]);
   };
   useEffect(() => {
     const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -65,12 +68,11 @@ export default function Home({}) {
           </button>
           <div>{showSchema && <Schema />}</div>
           <div>
-            <Editor initialQuery={sqlQuery} onChange={handleQueryChange} />
-            <input
-              className={styles.queryInput}
-              contentEditable
-              value={sqlQuery}
-              onChange={(e) => setSqlQuery(e.target.value)}
+            <Editor
+              initialQuery={sqlQuery}
+              onChange={handleQueryChange}
+              replaceQuery={replaceQuery}
+              onReplace={handleReplaceQueryChange}
             />
             <div>
               <button onClick={handleQueryClick}>Submit Query</button>
