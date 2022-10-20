@@ -20,22 +20,25 @@ const Editor: React.FC<Props> = (props) => {
     (state: EditorState) => onChange(state.doc.toString()),
     [onChange]
   );
+  const handleReplace = useCallback(() => onReplace(), []);
   const [refContainer, editorView] = useCodeMirror<HTMLDivElement>({
     initialQuery: initialQuery,
     onChange: handleChange,
   });
-  if (replaceQuery) {
-    const transaction = {
-      changes: {
-        from: 0,
-        to: editorView.state.doc.length,
-        insert: replaceQuery,
-      },
-    };
-    const update = editorView.state.update(transaction);
-    editorView.update([update]);
-    onReplace();
-  }
+  useEffect(() => {
+    if (replaceQuery) {
+      const transaction = {
+        changes: {
+          from: 0,
+          to: editorView.state.doc.length,
+          insert: replaceQuery,
+        },
+      };
+      const update = editorView.state.update(transaction);
+      editorView.update([update]);
+      handleReplace();
+    }
+  }, [replaceQuery]);
 
   return <div className={styles.editor} ref={refContainer}></div>;
 };
