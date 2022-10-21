@@ -2,8 +2,9 @@ import type React from "react";
 import { useEffect, useState, useRef } from "react";
 import { basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
-import { EditorView } from "@codemirror/view";
-import { PostgreSQL, sql, SQLDialect } from "@codemirror/lang-sql";
+import { EditorView, keymap } from "@codemirror/view";
+import { indentWithTab } from "@codemirror/commands";
+import { PostgreSQL, sql } from "@codemirror/lang-sql";
 
 interface Props {
   initialQuery: string;
@@ -24,6 +25,7 @@ const useCodeMirror = <T extends Element>(
       doc: props.initialQuery,
       extensions: [
         basicSetup,
+        keymap.of([indentWithTab]),
         sql({
           dialect: PostgreSQL,
           upperCaseKeywords: true,

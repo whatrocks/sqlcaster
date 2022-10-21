@@ -8,9 +8,9 @@ import QueryResults from "components/QueryResults";
 import styles from "../styles/Home.module.css";
 
 const CANNED_QUERIES = [
-  "select * from casts where username = 'whatrocks' and reactions is not null order by reactions desc limit 3;",
-  "SELECT avatar_url, count(*) as deleted_casts from casts where deleted is not null group by 1 order by deleted_casts desc limit 100;",
-  "SELECT DATE_TRUNC('month',to_timestamp(published_at*1000000)) AS month, COUNT(*) AS count FROM casts group by DATE_TRUNC('month',to_timestamp(published_at*1000000)) ORDER BY 2 DESC",
+  "select * from casts \n where username = 'whatrocks' and reactions is not null \n order by reactions desc \n limit 3;",
+  "SELECT avatar_url, count(*) as deleted_casts from casts \nwhere deleted is not null \n group by 1 \n order by deleted_casts desc \n limit 100;",
+  "SELECT \n DATE_TRUNC('month',to_timestamp(published_at*1000000)) AS month, \n COUNT(*) AS count \n FROM casts \n group by DATE_TRUNC('month',to_timestamp(published_at*1000000)) \n ORDER BY 2 DESC",
 ];
 
 export default function Home({}) {
