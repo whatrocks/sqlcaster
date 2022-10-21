@@ -75,7 +75,9 @@ export default function Home({}) {
               onReplace={handleReplaceQueryChange}
             />
             <div>
-              <button onClick={handleQueryClick}>Submit Query</button>
+              <button onClick={handleQueryClick}>
+                {showQueryResults ? "Clear results" : "Submit query"}
+              </button>
               <button onClick={handleFeelingLazyClick}>
                 I&apos;m Feeling Lazy
               </button>
