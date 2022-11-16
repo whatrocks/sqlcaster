@@ -11,6 +11,13 @@ const CANNED_QUERIES = [
   "select * from casts \n where username = 'whatrocks' and reactions is not null \n order by reactions desc \n limit 3;",
   "SELECT avatar_url, count(*) as deleted_casts from casts \nwhere deleted is not null \n group by 1 \n order by deleted_casts desc \n limit 100;",
   "SELECT \n DATE_TRUNC('month',to_timestamp(published_at*1000000)) AS month, \n COUNT(*) AS count \n FROM casts \n group by DATE_TRUNC('month',to_timestamp(published_at*1000000)) \n ORDER BY 2 DESC",
+  "SELECT avatar_url, display_name, reply_parent_username, published_at FROM casts \n WHERE reply_parent_username = 'a16zcrypto' \n ORDER BY published_at DESC \n LIMIT 10",
+  "SELECT COUNT(display_name), reply_parent_username FROM casts \n WHERE reply_parent_username = 'a16zcrypto' \n GROUP BY reply_parent_username \n LIMIT 10",
+  "SELECT avatar_url, display_name, text, published_at FROM casts \n WHERE display_name = 'Dan Romero' \n ORDER BY published_at DESC \n LIMIT 10",
+  "SELECT COUNT(DISTINCT(ADDRESS)) FROM casts \n LIMIT 10",
+  "SELECT avatar_url, display_name, COUNT(recasters) AS num_recasters FROM casts \n GROUP BY avatar_url, display_name \n ORDER BY num_recasters DESC \n LIMIT 10",
+  "SELECT avatar_url, display_name, COUNT(mentions) AS num_mentions FROM casts \n GROUP BY avatar_url, display_name \n ORDER BY num_mentions DESC \n LIMIT 10",
+  "SELECT avatar_url, display_name, COUNT(DELETED) AS num_deleted FROM casts \n GROUP BY avatar_url, display_name \n ORDER BY num_deleted DESC \n LIMIT 10"
 ];
 
 export default function Home({}) {
